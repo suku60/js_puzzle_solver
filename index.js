@@ -1,3 +1,6 @@
-import { data } from "./data.js";
+import { initialData,  piecesData,  sizeData, valuesData } from "./data.js";
 
-console.log(data)
+console.log("initialdata", initialData,
+  "piecesdata:", piecesData.cornerPieces,
+  "sizedata:", sizeData,
+  "valuesdata", valuesData)

@@ -158,7 +158,7 @@ const findLowestValue = (piece) => {
 
 const rotate = (sides = [], piece = {}) => {
 
-    const howManyTimesToRotate = (sidesArr) => {
+    const howManyTimesToRotateCorner = (sidesArr) => {
 
         let valuesToSearch = sidesArr.length/2
         let timesToRotate = 0
@@ -171,7 +171,7 @@ const rotate = (sides = [], piece = {}) => {
             
         }
         
-        if(piece[0] !== valuesData.lowestValue && piece[1] === valuesData.lowestValue){
+        if(sidesArr[0] !== valuesData.lowestValue && sidesArr[1] === valuesData.lowestValue){
             timesToRotate++
             timesToRotate++
         }
@@ -182,7 +182,7 @@ const rotate = (sides = [], piece = {}) => {
 
     if(sides) {
         
-        const timesToRotate = howManyTimesToRotate(sides)
+        const timesToRotate = howManyTimesToRotateCorner(sides)
         let newSides = sides
 
         for (let i = 0; i < timesToRotate; i++) {

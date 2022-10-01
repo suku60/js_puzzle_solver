@@ -156,6 +156,21 @@ const findLowestValue = (piece) => {
     return borders
 }
 
+export const findLowestValueInPiece = (piece) => {
+
+    let values = piece.pieceValues
+    let lowestValue = valuesData.lowestValue
+    let borders = 0;
+
+    for (let i = 0; i < values.length; i++) {
+        if(values[i] === lowestValue){
+            borders++
+        }
+    }
+
+    return borders
+}
+
 const rotate = (sides = [], piece = {}) => {
 
     const howManyTimesToRotateCorner = (sidesArr) => {

@@ -12,6 +12,11 @@ const giveMeAvailablePieces = (solutionSoFar) => {
   let allPiecesAvailable = piecesData
   let temporarySolution = solutionSoFar
 
+
+//   VAMOS A TENER QUE HACER SÓLO UN BUCLE AL QUE MANUALMENTE LE VAMOS
+// A IR PASANDO CADA UNO DE LOS CORNERS.
+//  TAMBIÉN TENDREMOS QUE INSTANCIAR VARIOS "CONTENEDORES" CON TODAS LAS PIEZAS 
+
   for (let i = 0; i < solutionSoFar.length; i++) {
       
       let pieceToEraseNumber = solutionSoFar[i].pieceNumber
@@ -48,7 +53,8 @@ const giveMeAvailablePieces = (solutionSoFar) => {
 
       console.log("deletedpiece...",
               "queda....", whereToLook,
-              "habian,", piecesData)
+              "habian,", piecesData
+              )
 
       // if(whereToLook === )
   }

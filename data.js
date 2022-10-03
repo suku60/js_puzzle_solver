@@ -83,7 +83,7 @@ const organizePieces = (pieces) => {
     for (let i = 0; i < pieces.length; i++) {
 
         if(!i){
-            console.log("doing nothing...")
+            // console.log("doing nothing...")
 
         }else{
             

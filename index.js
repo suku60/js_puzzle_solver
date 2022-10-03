@@ -1,97 +1,37 @@
 import {  findLowestValueInPiece, piecesData,  sizeData, valuesData } from "./data.js";
 
-// console.log(
-//   "piecesdata:", piecesData,
-//   "sizedata:", sizeData,
-//   "valuesdata", valuesData
-//   )
+console.log(
+  "piecesdata:", piecesData,
+  "sizedata:", sizeData,
+  "valuesdata   ", valuesData
+  )
 
-const giveMeAvailablePieces = (solutionSoFar) => {
-  console.log("solution so far....", solutionSoFar)
+const findSolution = (pieces, size, values) => {
 
-  let allPiecesAvailable = piecesData
-  let temporarySolution = solutionSoFar
+    console.log("nos entra eso..")
 
+    /*
+     possible starts = corners.length
+     possible solutions = ?
+    
+    vamos a buscar una solucion tan sólo utilizando un corner, e ir añadiendo lo que vamos
+    obteniendo en las busquedas.
+    */
 
-//   VAMOS A TENER QUE HACER SÓLO UN BUCLE AL QUE MANUALMENTE LE VAMOS
-// A IR PASANDO CADA UNO DE LOS CORNERS.
-//  TAMBIÉN TENDREMOS QUE INSTANCIAR VARIOS "CONTENEDORES" CON TODAS LAS PIEZAS 
+    let solution = []
+    // solution tendrá un length maximo de 16
 
-  for (let i = 0; i < solutionSoFar.length; i++) {
-      
-      let pieceToEraseNumber = solutionSoFar[i].pieceNumber
-      let howManyZerosThisPieceHas = findLowestValueInPiece(solutionSoFar[i])
-      let whereToLook 
+    solution.unshift(pieces.cornerPieces[0])
 
-      switch (howManyZerosThisPieceHas) {
+    // console.log(size.totalNumberOfPieces)
 
-          case 1: whereToLook = allPiecesAvailable.borderPieces;
-          console.log("entro case 1")
-                  
-                  break;
-
-          case 2: whereToLook = allPiecesAvailable.cornerPieces
-          console.log("entro case 2", whereToLook.length)
-                  
-                  break;
-
-          default: whereToLook = allPiecesAvailable.centerPieces
-
-                  break;
-      }
-
-      let newData
-
-      for (let b = 0; b < whereToLook.length; b++) {
-
-          if ( whereToLook[b].pieceNumber === pieceToEraseNumber) { 
-  
-              let deteledPiece = whereToLook.splice(b, 1); 
-              
-          }
-      }
-
-      console.log("deletedpiece...",
-              "queda....", whereToLook,
-              "habian,", piecesData
-              )
-
-      // if(whereToLook === )
-  }
-
-  // return data
-}
-
-const getAllSolutions = (data) => {
-
-    let allCorners = data?.cornerPieces
-
-    let allSolutions = []
-
-    // dejo el bucle en sólo 1 ya que cuando se repite el bucle no se hacen bien las cosas
-    // y se eliminan varias piezas...
-
-    for (let i = 0; i < 1; i++) {
-
-       let solution = []
-
-       solution.unshift(allCorners[i])
-
-       console.log("pieza que introduzco", solution[0])
-
-      //  esto debera ir en un bucle
-
-      let availablePieces = giveMeAvailablePieces(solution)
-
-      console.log("available pieces", availablePieces)
-
-      //  esto estará condicionado a entrar sólo cuando solution tenga 16 piezas
-       allSolutions.push(solution)
-
+    if(solution.length === size.totalNumberOfPieces){
+        return solution
+    }else{
+        console.log("aún no hemos encontrado las 16 piezas, nos queda esto --->", solution)
     }
-
-    return allSolutions
 }
 
-getAllSolutions(piecesData)
-// console.log()
+const finalSolution = findSolution(piecesData, sizeData, valuesData)
+
+console.log(finalSolution)

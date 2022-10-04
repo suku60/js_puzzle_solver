@@ -49,6 +49,7 @@ export const sizeData = createSizeData(initialData[0])
 const createValuesData = (puzzleData) => {
 
     let allValuesData = []
+    let listOfValuesAndHowManyTimesTheyAppear = []
 
     for (let i = 0; i < puzzleData.length; i++) {
         if(!i){
@@ -63,13 +64,28 @@ const createValuesData = (puzzleData) => {
         }
     }
 
+
     let lowestValue = Math.min(...allValuesData)
     let highestValue = Math.max(...allValuesData)
     let uniqueValues = [...new Set(allValuesData.sort())];
 
+    
+    const howManyTimesThisValueAppears = (array, value) => {
+        let data = [value, array.filter((v) => (v === value)).length]
+        
+        return data
+    }
+
+    for (let i = 0; i < uniqueValues.length; i++) {
+
+        listOfValuesAndHowManyTimesTheyAppear.push(howManyTimesThisValueAppears(allValuesData, i))
+        
+    }
+
     return { uniqueValues,
              lowestValue,
-             highestValue }
+             highestValue,
+             listOfValuesAndHowManyTimesTheyAppear }
 }
 
 export const valuesData = createValuesData(initialData)

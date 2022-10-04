@@ -13,9 +13,24 @@ const solvePuzzle = (pieces, size, values) => {
             
             starterSolutions[i] = [];
             starterSolutions[i].unshift(corners[i])
+
         }
-      
-        // console.log(starterSolutions[0])
+
+        for (let i = 0; i < starterSolutions.length; i++) { 
+            
+            if(((starterSolutions[i][0].pieceValues[3] === starterSolutions[i+3]?.[0].pieceValues[3])
+            || (starterSolutions[i][0].pieceValues[3] === starterSolutions[i+2]?.[0].pieceValues[3])
+            || (starterSolutions[i][0].pieceValues[3] === starterSolutions[i+1]?.[0].pieceValues[3])) &&
+            ((starterSolutions[i][0].pieceValues[2] === starterSolutions[i+3]?.[0].pieceValues[2])
+            || (starterSolutions[i][0].pieceValues[2] === starterSolutions[i+2]?.[0].pieceValues[2])
+            || (starterSolutions[i][0].pieceValues[2] === starterSolutions[i+1]?.[0].pieceValues[2]))){
+
+                starterSolutions.splice(i, 1)
+            }
+
+        }
+
+
 
         return starterSolutions;
       }
@@ -58,65 +73,50 @@ const solvePuzzle = (pieces, size, values) => {
 
             }
         }
-
-        console.log(
-            // "probandoooo----pieza a eliminar: ", solutions[3][0], "---queda--", stashes[3].cornerPieces,
-            // "probandoooo----pieza a eliminar: ", solutions[2][0], "---queda--", stashes[2].cornerPieces,
-        )
     }
 
     function findNextPieceTopRow(piece, length, stash){
+        // esto corre 4 veces... una por cada solucion temporal
 
         let valueToSearch = piece.pieceValues[2]
+        let possiblePieces = []
+        let foundPiece
 
+        console.log("------------------------------------------------")
         console.log("pieza que entra: ", piece)
         console.log("valuetosearch...", valueToSearch)
         console.log("length que entra en findnextppiece...", length)
-        console.log("stash que entra...", stash) 
+        // console.log("stash que entra...", stash) 
+        console.log("foundpiece", foundPiece)
 
-        if(length === sizeData.x_AxisPieces-1){
+        if(length === size.x_AxisPieces-1){
             // console.log("buscamos el proximo corner...")
         }else{
             // console.log("buscamos en borders...")
-            let foundPiece = 0
+            for (let b = 0; b < stash.borderPieces.length; b++) {
+        
+                     //    console.log(stashes[i].borderPieces[b])
+                  for (let c = 0; c < stash.borderPieces[b].pieceValues.length; c++) {
+                  // const element = array[c];
+                  // console.log("values...", stashes[i].borderPieces[b].pieceValues )
+                  if(((stash.borderPieces[b].pieceValues[c] === valueToSearch)
+                     && (stash.borderPieces[b].pieceValues[c+1] === valuesData.lowestValue)) 
+                  || ((stash.borderPieces[b].pieceValues[c] === valueToSearch)
+                  && (stash.borderPieces[b].pieceValues[c-3] === valuesData.lowestValue))
+                  ){
 
-            for (let i = 0; i < stashes.length; i++) {
-
-                // if(stashes[i].borderPieces){
-                // }
-
-                // console.log("found??", foundPiece)
-
-                if(!foundPiece){
-
-                    for (let b = 0; b < stashes[i].borderPieces.length; b++) {
-            
-                         //    console.log(stashes[i].borderPieces[b])
-                      for (let c = 0; c < stashes[i].borderPieces[b].pieceValues.length; c++) {
-                      // const element = array[c];
-                      // console.log("values...", stashes[i].borderPieces[b].pieceValues )
-                      if(((stashes[i].borderPieces[b].pieceValues[c] === valueToSearch)
-                         && (stashes[i].borderPieces[b].pieceValues[c+1] === valuesData.lowestValue)) 
-                      || ((stashes[i].borderPieces[b].pieceValues[c] === valueToSearch)
-                      && (stashes[i].borderPieces[b].pieceValues[c-3] === valuesData.lowestValue))
-                      ){
-  
-                        //   console.log("coincidencia en...", stashes[i].borderPieces[b].pieceValues)
-                          foundPiece++
-                        //   console.log("found piece:", foundPiece)
-                          
-                      }
-                    
-                   }
-                   
-                }
-                }else{
-                    // console.log("already found piece:", foundPiece)
+                      console.log("coincidencia en...", stash.borderPieces[b].pieceNumber)
+                    possiblePieces.unshift(stash.borderPieces[b])
+                    // VAMOS A REDUCIR EL NUMERO DE STARTS PARA EVITAR EL DUPLICADO DE LAS 2 PIEZAS
+                    // QUE SON IGUALES
                 }
                 
             }
-        
+            
         }
+        
+    }
+    console.log("array de posibles soluciones", possiblePieces)
 
         // console.log(piece, valueToSearch)
     }
@@ -126,18 +126,21 @@ const solvePuzzle = (pieces, size, values) => {
     let stashes = createStashes(starts)
     
     cleanStashes(starts)
-    
-    // console.log de stashes limpios sin el primer corner
-    // console.log(stashes.length)
 
-    // por cada corner, suponiendo que habrá una solución para cada uno, corremos una función. 4 en total
+    // por cada corner, suponiendo que habrá una solución para cada uno, corremos una función.
     for (let a = 0; a < starts.length; a++) {
-        
-        // for (let i = 1; i < sizeData.x_AxisPieces; i++) {
 
-        // va a correr 3 veces la función de buscar proxima pieza a la izquierda
-            findNextPieceTopRow(starts[a][0], starts[a].length, stashes[a])
-        // }
+        // let starts = findNextPieceTopRow(starts[a][0], starts[a].length, stashes[a])
+
+
+
+
+
+        
+        // REACTIVAR!
+        findNextPieceTopRow(starts[a][0], starts[a].length, stashes[a])
+
+
 
     }
 
